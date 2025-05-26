@@ -7,7 +7,7 @@ export function Navbar() {
     const menuItems = [
         { label: "About", href: "#about" },
         { label: "Work Experience", href: "#experience" },
-        { label: "Skills", href: "#" },
+        { label: "Skills", href: "#skills" },
         { label: "Education", href: "#education" },
         
     ];
@@ -18,7 +18,7 @@ export function Navbar() {
 
 
     return (
-        <div className="fixed bg-amber-50 w-full z-10 border-b-2">
+        <div className="fixed bg-white w-full z-10 border-b-2">
             <div className={` flex items-center text-secondary justify-between py-2 px-4`}>
                 <div>
                     <p className="text-lg animate-slide-down">Mohd. Haaris Amin</p>
