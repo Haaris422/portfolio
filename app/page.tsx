@@ -1,5 +1,5 @@
 import { About } from "@/components/sections/About";
-import { Education } from "@/components/sections/Education";
+import { Contact } from "@/components/sections/Contact/Contact";
 import { Experience } from "@/components/sections/Experience";
 import { Skills } from "@/components/sections/Skills";
 export default function Home() {
@@ -17,8 +17,8 @@ export default function Home() {
         <Skills />
       </section>
 
-      <section className="scroll-mt-10" id="education">
-        <Education />
+      <section className="scroll-mt-10" id="contact">
+        <Contact/>
       </section>
       
     </main>

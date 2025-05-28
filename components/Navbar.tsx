@@ -8,7 +8,7 @@ export function Navbar() {
         { label: "About", href: "#about" },
         { label: "Work Experience", href: "#experience" },
         { label: "Skills", href: "#skills" },
-        { label: "Education", href: "#education" },
+        // { label: "Education", href: "#education" },
         
     ];
     const [openMenu, setOpenMenu] = useState(false);
@@ -42,7 +42,10 @@ export function Navbar() {
                 </ul>
 
                 <div className="animate-slide-in-opp">
-                    <p className="hidden md:block">Contact Me</p>
+                                <Link className="hidden md:block" href={"#contact"}>
+                                    Contact Me
+                                </Link>
+                                <span className="absolute mt-0.5 left-1/2 bottom-0 w-0 h-[2.5px] bg-black transition-all duration-300 ease-in-out group-hover:w-full group-hover:left-0 transform -translate-x-1/2 group-hover:translate-x-0" />
 
                     <div className="block md:hidden">
                         <HamburgerButton open={openMenu} onClick={openMobileNav} />
