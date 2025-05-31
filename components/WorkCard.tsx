@@ -1,5 +1,8 @@
-import { LuCalendar, LuCalendar1, LuCode, LuLayers } from "react-icons/lu";
+"use client";
+import { LuBriefcase, LuCalendar, LuCalendar1, LuCode, LuLayers } from "react-icons/lu";
 import { Button } from "./Button";
+import { useRef } from "react";
+import { useInView } from "./hooks/useInView";
 
 interface WorkCardProps {
     name?:string;
@@ -15,13 +18,21 @@ interface CardProps {
   data: WorkCardProps;
 }
 export function Card({data}:CardProps){
+      const contentRef = useRef<HTMLDivElement | any>(null);
+  const showContent = useInView(contentRef);
+
     return(
-        <div className="animate-fade-in min-w-[250px] flex items-start gap-4 relative bg-white border-2 min-h-[200px] rounded-4xl p-8 transition-all border-black hover:shadow-amber-800 hover:shadow-2xs hover:bg-amber-50">
-            {data.tech&&<div className="bg-amber-200 p-3 rounded-lg">
-                    <LuLayers className="text-2xl text-gray-800" strokeWidth={1.5} />
-                  </div>}
+        <div ref={contentRef} 
+        className={`min-w-[250px] flex items-start gap-4 relative bg-white border-2 min-h-[200px] rounded-4xl p-8 transition-all border-black hover:shadow-[#5c6268] hover:shadow-2xs hover:backdrop-blur-md
+            duration-1000 ${
+          showContent ? "animate-fade-in opacity-100" : "opacity-0"
+        }
+        `}>
+            <div className="bg-black p-3 rounded-lg">
+                    {data.tech?<LuLayers className="text-2xl text-white" strokeWidth={1.5} />:<LuBriefcase className="text-2xl text-white" strokeWidth={1.5}/>}
+            </div>
             <div>
-            <h2 className="text-2xl font-bold mb-2">{data?.name ? data.name: data.role}</h2>
+            <h2 className="text-2xl font-bold">{data?.name ? data.name: data.role}</h2>
             <div className="flex justify-between mb-6 flex-wrap">
                 <span className="italic">{data.company ? data.company:data.role}</span>
                 {data?.period && <span className="flex items-center gap-1"><LuCalendar className="text-xl"/>{data.period}</span>}

@@ -2,10 +2,14 @@
 import { Button } from "@/components/Button"
 import { useState } from "react"
 import { LuSend } from "react-icons/lu"
-import { VscLoading } from "react-icons/vsc";
 import { PopUp } from "./PopUp";
+import { useRef } from "react";
+import { useInView } from "@/components/hooks/useInView";
 
 export function ContactForm() {
+    const contentRef = useRef<HTMLDivElement | any>(null);
+    const showContent = useInView(contentRef);
+
     const fields = [{ name: "name", type: "text", placeholder: "Your Name...", label: "Name" },
     { name: "email", type: "email", placeholder: "Your Email...", label: "Email" },
     { name: "mssg", type: "text", placeholder: "Your Message...", label: "Message" }
@@ -20,8 +24,9 @@ export function ContactForm() {
     });
     const [sending, setSending] = useState(false);
     const [popUpProps, setPopUpProps] = useState({
-        open:false, message:"", status:false
-    })
+        open: false, message: "", status: false
+    });
+    
     function validate() {
         let newErrors = {
             name: "",
@@ -83,24 +88,24 @@ export function ContactForm() {
             if (result.success) {
                 console.log("Success:", result);
                 setSending(false);
-                setPopUpProps((prev)=>({
-                    open:true,
-                    status:true,
-                    message:"Message Sent Successfuly"
+                setPopUpProps((prev) => ({
+                    open: true,
+                    status: true,
+                    message: "Message Sent Successfuly"
                 }))
-                const timeout = setTimeout(()=>{
-                    setPopUpProps((prev)=>({
+                const timeout = setTimeout(() => {
+                    setPopUpProps((prev) => ({
                         ...prev,
-                        open:false
+                        open: false
                     }))
-                },3000)
+                }, 3000)
                 return () => clearTimeout(timeout);
             } else {
                 setSending(false);
-                setPopUpProps((prev)=>({
-                    open:true,
-                    status:false,
-                    message:"An Error occured while sending the Message."
+                setPopUpProps((prev) => ({
+                    open: true,
+                    status: false,
+                    message: "An Error occured while sending the Message."
                 }))
                 console.error("Failed:", result);
             }
@@ -110,36 +115,43 @@ export function ContactForm() {
     }
 
     return (
-        <div className="bg-white rounded-4xl w-full border-2 border-black p-4">
-            <h2 className="relative p-2 group text-2xl font-bold text-center lg:text-left w-full">
-                <span className="relative inline-block">
-                    Send Me a Message
-                </span>
-            </h2>
-            <form onSubmit={handleSubmit}>
-                {fields.map((field, index) => (
-                    <div className="space-y-1 mt-4" key={index}>
-                        <p className="px-1.5">{field.label}</p>
-                        {
-                            field.name === "mssg" ?
-                                <textarea rows={8} onChange={handleChange} className={`w-full border-2 p-2 ${errors[field.name] ? 'border-red-500' : 'border-black'} rounded-md`} name={field.name} placeholder={field.placeholder} />
-                                :
-                                <input onChange={handleChange} className={`w-full border-2 p-2 ${errors[field.name] ? 'border-red-500' : 'border-black'} rounded-md`} name={field.name} type={field.type} placeholder={field.placeholder} />
-                        }
-                        {errors[field.name] && (
-                            <p className="text-red-500 text-sm px-1.5">
-                                {errors[field.name]}
-                            </p>
-                        )}
-                    </div>
-                ))}
-                <Button type="submit" className="cursor-pointer text-lg text-white bg-black w-full my-4 rounded-2xl">
-                    {sending ? <><div className="loader" /> Sending....</> : <><LuSend size={22} /> Send Message</>}
+        <div ref={contentRef} className={`relative group transition-opacity duration-1000 ${
+          showContent ? "animate-fade-in opacity-100" : "animate-fade-out"
+        }`}>
+            <div className="absolute inset-0 bg-[#d9d9d9] rounded-2xl transform rotate-1 
+              transition-transform duration-300 group-hover:rotate-2"></div>
+            <div className="bg-white relative rounded-4xl w-full border-2 border-black p-4 shadow-lg transition-transform 
+                duration-300 group-hover:translate-y-[-5px]">
+                <h2 className="relative p-2 group text-2xl font-bold text-center lg:text-left w-full">
+                    <span className="relative inline-block">
+                        Send Me a Message
+                    </span>
+                </h2>
+                <form onSubmit={handleSubmit}>
+                    {fields.map((field, index) => (
+                        <div className="space-y-1 mt-4" key={index}>
+                            <p className="px-1.5">{field.label}</p>
+                            {
+                                field.name === "mssg" ?
+                                    <textarea rows={8} onChange={handleChange} className={`w-full border-2 p-2 ${errors[field.name] ? 'border-red-500' : 'border-black'} rounded-md`} name={field.name} placeholder={field.placeholder} />
+                                    :
+                                    <input onChange={handleChange} className={`w-full border-2 p-2 ${errors[field.name] ? 'border-red-500' : 'border-black'} rounded-md`} name={field.name} type={field.type} placeholder={field.placeholder} />
+                            }
+                            {errors[field.name] && (
+                                <p className="text-red-500 text-sm px-1.5">
+                                    {errors[field.name]}
+                                </p>
+                            )}
+                        </div>
+                    ))}
+                    <Button type="submit" className="cursor-pointer text-lg text-white bg-black w-full my-4 rounded-2xl">
+                        {sending ? <><div className="loader" /> Sending....</> : <><LuSend size={22} /> Send Message</>}
 
-                </Button>
-            </form>
-                        <PopUp open={popUpProps.open} status={popUpProps.status} message={popUpProps.message} position="bottom-left"/>
+                    </Button>
+                </form>
+                <PopUp open={popUpProps.open} status={popUpProps.status} message={popUpProps.message} position="bottom-left" />
 
+            </div>
         </div>
     )
 }

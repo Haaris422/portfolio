@@ -1,9 +1,15 @@
+"use client";
 import { Button } from "@/components/Button"
 import Link from "next/link"
 import { FaXTwitter } from "react-icons/fa6"
 import { LuArrowUpRight, LuGithub, LuLinkedin, LuMail, LuMapPin } from "react-icons/lu"
+import { useRef } from "react";
+import { useInView } from "@/components/hooks/useInView";
 
 export function ContactInfo() {
+        const contentRef = useRef<HTMLDivElement | any>(null);
+        const showContent = useInView(contentRef);
+    
     const otherContacts = [
         {
             label: "Email",
@@ -25,7 +31,14 @@ export function ContactInfo() {
         },
     ]
     return (
-        <div className="bg-white rounded-4xl w-full border-2 border-black p-4 flex flex-col h-full">
+        <div ref={contentRef} className={`relative group transition-opacity duration-1000 ${
+          showContent ? "animate-fade-in opacity-100" : "opacity-0"
+        }`}>
+                <div className="absolute inset-0 bg-[#d9d9d9] rounded-2xl transform -rotate-1 
+              transition-transform duration-300 group-hover:-rotate-2"></div>
+
+        <div className="relative bg-white rounded-4xl w-full border-2 border-black p-4 flex flex-col h-full shadow-lg transition-transform 
+                duration-300 group-hover:translate-y-[-5px]">
             <h2 className="relative p-2 group text-2xl font-bold text-center lg:text-left w-full">
                 <span className="relative inline-block">Other Ways to Connect</span>
             </h2>
@@ -73,6 +86,7 @@ export function ContactInfo() {
                     </Link>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

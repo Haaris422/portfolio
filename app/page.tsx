@@ -1,10 +1,12 @@
+import BackgroundAnimation from "@/components/BackgroundAnimation";
 import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact/Contact";
 import { Experience } from "@/components/sections/Experience";
 import { Skills } from "@/components/sections/Skills";
 export default function Home() {
   return(
-     <main className="bg-gradient-to-b from-amber-50 to-amber-100">
+     <main>
+      <BackgroundAnimation/>
       <section className="pt-10" id="about">
         <About />
       </section>

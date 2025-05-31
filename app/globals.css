@@ -14,7 +14,7 @@
   }
 
   .light {
-    --color-primary: #F2E2B1;
+    --color-primary: #eff2b1;
     --color-secondary: black;
   }
 }
@@ -36,7 +36,8 @@ body {
   /* background: var(--background);
   color: var(--foreground); */
   font-family: Arial, Helvetica, sans-serif;
-  background-color: var(--color-amber-100);
+background: #cdd0d4;
+background: linear-gradient(60deg, rgba(205, 208, 212, 1) 0%, rgba(161, 161, 161, 1) 50%, rgba(71, 71, 71, 1) 100%);
 }
 
 @keyframes slide-down {
@@ -90,14 +91,14 @@ body {
       transform: translateY(20px);
     }
     to {
-      opacity: 1;
+      opacity: 0.75;
       transform: translateY(0);
     }
   }
 
 @keyframes fade-out {
   0% {
-    opacity: 1;
+    opacity: 0.75;
     transform: scale(1);
   }
   100% {
@@ -129,7 +130,7 @@ body {
   }
 
 .animate-fade-out {
-  animation: fade-out 0.7s ease-out backwards;
+  animation: fade-out 0.7s ease-out forwards;
 }
 
 .animate-slide-down {
@@ -160,7 +161,7 @@ body {
 .menu-btn-1 span,
 .menu-btn-1 span::before,
 .menu-btn-1 span::after {
-  background: black;
+  background: #d9d9d9;
   border-radius: 3px;
   content: '';
   position: absolute;

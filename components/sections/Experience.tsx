@@ -1,3 +1,4 @@
+import { Heading } from "../Heading";
 import { Card } from "../WorkCard";
 
 export function Experience() {
@@ -49,23 +50,13 @@ export function Experience() {
 
       <div className="px-2 py-8 lg:p-16 space-y-4">
 
-        <h2 className="relative pb-8 group text-4xl font-bold text-center lg:text-left w-full">
-          <span className="relative inline-block">
-            Work Experience
-            <span className="absolute -bottom-[3px] left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 h-1.5 bg-amber-400 rounded-full transition-all duration-300 w-full lg:w-[40%] group-hover:w-full"></span>
-          </span>
-        </h2>
+        <Heading text="Work Experience" className="pb-8" size="4xl"/>
         <div className="space-y-8">
           {experience.map((exp, index) => (
             <Card key={index} data={exp} />
           ))}
         </div>
-        <h2 className="relative group text-2xl my-10 font-bold text-center lg:text-left w-full">
-        <span className="relative inline-block">
-          Major Projects
-          <span className="absolute -bottom-[3px] left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 h-1.5 bg-amber-400 rounded-full transition-all duration-300 w-full lg:w-[40%] group-hover:w-full"></span>
-        </span>
-      </h2> 
+        <Heading text={"Major Projects"} size="2xl" className="my-10"/>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {projects.map((proj, index) => (
             <Card key={index} data={proj} />
