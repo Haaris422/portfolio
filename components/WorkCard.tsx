@@ -23,13 +23,15 @@ export function Card({data}:CardProps){
 
     return(
         <div ref={contentRef} 
-        className={`min-w-[250px] flex items-start gap-4 relative bg-white border-2 min-h-[200px] rounded-4xl p-8 transition-all border-black hover:shadow-[#5c6268] hover:shadow-2xs hover:backdrop-blur-md
+        className={`min-w-[250px] flex items-start gap-4 text-white relative 
+            bg-[#6c757d] border-2 min-h-[200px] rounded-4xl p-8 transition-all 
+            border-black hover:opacity-100!
             duration-1000 ${
-          showContent ? "animate-fade-in opacity-100" : "opacity-0"
+          showContent ? "animate-fade-in opacity-75!" : "animate-fade-out"
         }
         `}>
             <div className="bg-black p-3 rounded-lg">
-                    {data.tech?<LuLayers className="text-2xl text-white" strokeWidth={1.5} />:<LuBriefcase className="text-2xl text-white" strokeWidth={1.5}/>}
+                    {data.tech?<LuLayers className="text-2xl" strokeWidth={1.5} />:<LuBriefcase className="text-2xl" strokeWidth={1.5}/>}
             </div>
             <div>
             <h2 className="text-2xl font-bold">{data?.name ? data.name: data.role}</h2>

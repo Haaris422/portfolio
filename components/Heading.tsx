@@ -9,15 +9,14 @@ const sizeMap:any = {
   '3xl': 'text-3xl',
   '4xl': 'text-4xl',
   '5xl': 'text-5xl',
-  // etc.
 };
 
 export function Heading({ text, size, className = '' }: HeadingProps) {
   const textSize = sizeMap[size] || 'text-base';
 
   return (
-    <h2 className={`relative group ${textSize} font-bold text-center lg:text-left w-full ${className}`}>
-      <span className="relative inline-block">
+    <h2 className={`relative group ${textSize} font-bold text-center w-full ${className}`}>
+      <span className="relative inline-block outlined-text">
         {text}
         <span className="absolute -bottom-[3px] left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 h-1.5 bg-[#6c757d] rounded-full transition-all duration-300 w-full lg:w-[40%] group-hover:w-full"></span>
       </span>

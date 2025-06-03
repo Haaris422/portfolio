@@ -118,9 +118,9 @@ export function ContactForm() {
         <div ref={contentRef} className={`relative group transition-opacity duration-1000 ${
           showContent ? "animate-fade-in opacity-100" : "animate-fade-out"
         }`}>
-            <div className="absolute inset-0 bg-[#d9d9d9] rounded-2xl transform rotate-1 
+            <div className="absolute inset-0 bg-[#c4cbd0] rounded-2xl transform rotate-1 
               transition-transform duration-300 group-hover:rotate-2"></div>
-            <div className="bg-white relative rounded-4xl w-full border-2 border-black p-4 shadow-lg transition-transform 
+            <div className="bg-[#6c757d] text-white relative rounded-4xl w-full border-2 border-black p-4 shadow-lg transition-transform 
                 duration-300 group-hover:translate-y-[-5px]">
                 <h2 className="relative p-2 group text-2xl font-bold text-center lg:text-left w-full">
                     <span className="relative inline-block">

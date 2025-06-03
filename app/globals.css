@@ -91,14 +91,14 @@ background: linear-gradient(60deg, rgba(205, 208, 212, 1) 0%, rgba(161, 161, 161
       transform: translateY(20px);
     }
     to {
-      opacity: 0.75;
+      opacity: 1;
       transform: translateY(0);
     }
   }
 
 @keyframes fade-out {
   0% {
-    opacity: 0.75;
+    opacity: 1;
     transform: scale(1);
   }
   100% {
@@ -190,6 +190,16 @@ background: linear-gradient(60deg, rgba(205, 208, 212, 1) 0%, rgba(161, 161, 161
 .menu-btn-1.active span::after {
   margin-top: 0;
   transform: rotate(-45deg);
+}
+
+.outlined-text {
+    color: #d9d9d9;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
+
 }
 
 

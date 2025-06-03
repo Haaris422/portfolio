@@ -102,7 +102,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <div className="fixed w-full z-10 text-[#d9d9d9] backdrop-blur-md">
+    <div className="fixed w-full z-10 outlined-text backdrop-blur-md">
       <div className="flex items-center justify-between py-2 px-4">
         <div>
           <p className="text-xl animate-slide-down">Mohd. Haaris Amin</p>
@@ -113,7 +113,7 @@ export function Navbar() {
           {menuItems.filter((item) => item.href !== "#contact").map((item) => (
             <li
               key={item.label}
-              className={`relative group animate-slide-down ${activeSection === item.href ? "text-white font-semibold" : ""
+              className={`relative group animate-slide-down ${activeSection === item.href ? " font-semibold" : ""
                 }`}
             >
               <Link href={item.href}>{item.label}</Link>

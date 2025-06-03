@@ -66,7 +66,6 @@ const BackgroundAnimation: React.FC = () => {
           this.x = Math.random() * canvas.width;
         }
 
-        // Mouse avoidance
         const dx = this.x - mouse.current.x;
         const dy = this.y - mouse.current.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
