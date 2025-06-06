@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Heading } from "../../Heading";
 import { SkillShape } from "./SkillShape";
 import { Button } from "@/components/Button";
+import { SkillsContainer } from "./SkillsContainer";
 
 interface SkillsProps {
   skill: string;
@@ -108,30 +109,31 @@ export function Skills() {
     'backend',
     'other',
   ]
-  return (
-    <div className="p-2 pb-8 lg:px-32">
-      <div className="px-2 lg:p-16 space-y-4">
-        <Heading text="Skills" size="4xl" className="pb-8" />
-        <div className="flex gap-2 justify-between">
-          {tabs.map((tab) => (
-            <Button key={tab} onClick={() => setCategory(tab)} className={`${category === tab ? 'bg-white/10 backdrop-blur-md' : 'bg-transparent'} w-full cursor-pointer`}>
-              <Heading text={`${tab.charAt(0).toUpperCase() + tab.slice(1)} Skills`} size="2xl" />
+  return <SkillsContainer/>
+  // return (
+  //   <div className="p-2 pb-8 lg:px-32">
+  //     <div className="px-2 lg:p-16 space-y-4">
+  //       <Heading text="Skills" size="4xl" className="pb-8" />
+  //       <div className="flex gap-2 justify-between">
+  //         {tabs.map((tab) => (
+  //           <Button key={tab} onClick={() => setCategory(tab)} className={`${category === tab ? 'bg-white/10 backdrop-blur-md' : 'bg-transparent'} w-full cursor-pointer`}>
+  //             <Heading text={`${tab.charAt(0).toUpperCase() + tab.slice(1)} Skills`} size="2xl" />
 
-            </Button>
-          ))}
+  //           </Button>
+  //         ))}
 
-        </div>
-      </div>
-      <div className="flex justify-center w-full">
-        {areaWidth > 0 && (
-          <div
-            className="relative"
-            style={{ height: `${areaHeight}px`, width: `${areaWidth}px` }}
-          >
-            {skillShapes}
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  //       </div>
+  //     </div>
+  //     <div className="flex justify-center w-full">
+  //       {areaWidth > 0 && (
+  //         <div
+  //           className="relative"
+  //           style={{ height: `${areaHeight}px`, width: `${areaWidth}px` }}
+  //         >
+  //           {skillShapes}
+  //         </div>
+  //       )}
+  //     </div>
+  //   </div>
+  // );
 }
