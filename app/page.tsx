@@ -1,8 +1,8 @@
 import BackgroundAnimation from "@/components/BackgroundAnimation";
 import { About } from "@/components/sections/About/About";
 import { Contact } from "@/components/sections/Contact/Contact";
-import { Experience } from "@/components/sections/Experience";
-import { Skills } from "@/components/sections/Skills";
+import { Experience } from "@/components/sections/Experience/Experience";
+import { Skills } from "@/components/sections/Skills/Skills";
 export default function Home() {
   return(
      <main>

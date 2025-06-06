@@ -1,8 +1,7 @@
-// hooks/useInView.ts
 import { useState, useEffect } from "react";
 
-export function useInView(ref: React.RefObject<HTMLElement>, threshold = 0.2) {
-  const [isInView, setIsInView] = useState(true);
+export function useInView(ref: React.RefObject<HTMLElement>, threshold = 0.1) {
+  const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
     const element = ref.current;

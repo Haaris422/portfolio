@@ -1,5 +1,5 @@
-import { Heading } from "../Heading";
-import { Card } from "../WorkCard";
+import { Heading } from "../../Heading";
+import { Card } from "./WorkCard";
 
 export function Experience() {
   const experience = [

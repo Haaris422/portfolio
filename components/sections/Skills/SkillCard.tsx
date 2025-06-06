@@ -1,6 +1,6 @@
 "use client";
 import { useRef } from "react";
-import { useInView } from "./hooks/useInView";
+import { useInView } from "@/components/hooks/useInView";
 
 interface SkillCardProps {
   skill: string;

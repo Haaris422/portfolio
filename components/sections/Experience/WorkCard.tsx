@@ -1,8 +1,9 @@
 "use client";
 import { LuBriefcase, LuCalendar, LuCalendar1, LuCode, LuLayers } from "react-icons/lu";
-import { Button } from "./Button";
+import { Button } from "../../Button";
 import { useRef } from "react";
-import { useInView } from "./hooks/useInView";
+import { useInView } from "../../hooks/useInView";
+import { CardBody } from "../../CardBody";
 
 interface WorkCardProps {
     name?:string;
@@ -20,16 +21,13 @@ interface CardProps {
 export function Card({data}:CardProps){
       const contentRef = useRef<HTMLDivElement | any>(null);
   const showContent = useInView(contentRef);
-
+const anim = showContent ? "animate-fade-in opacity-75!" : "animate-fade-out";
     return(
-        <div ref={contentRef} 
-        className={`min-w-[250px] flex items-start gap-4 text-white relative 
+        <CardBody cardRef={contentRef} animationClass={anim} className={`min-w-[250px] flex items-start gap-4 text-white relative 
             bg-[#6c757d] border-2 min-h-[200px] rounded-4xl p-8 transition-all 
             border-black hover:opacity-100!
-            duration-1000 ${
-          showContent ? "animate-fade-in opacity-75!" : "animate-fade-out"
-        }
-        `}>
+            `}>
+        
             <div className="bg-black p-3 rounded-lg">
                     {data.tech?<LuLayers className="text-2xl" strokeWidth={1.5} />:<LuBriefcase className="text-2xl" strokeWidth={1.5}/>}
             </div>
@@ -49,6 +47,7 @@ export function Card({data}:CardProps){
                 ))}
             </div>}
             </div>
-        </div>
+        </CardBody>
+
     )
 }

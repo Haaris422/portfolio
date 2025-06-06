@@ -51,6 +51,17 @@ background: linear-gradient(60deg, rgba(205, 208, 212, 1) 0%, rgba(161, 161, 161
   }
 }
 
+@keyframes slide-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
 @keyframes slide-in {
   0% {
     transform: translateX(-100%);
@@ -134,19 +145,23 @@ background: linear-gradient(60deg, rgba(205, 208, 212, 1) 0%, rgba(161, 161, 161
 }
 
 .animate-slide-down {
-  animation: slide-down 0.7s ease-out forwards;
+  animation: slide-down 0.7s ease-out both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.7s ease-out backwards;
 }
 
 .animate-slide-in {
-  animation: slide-in 0.7s ease-out forwards;
+  animation: slide-in 0.7s ease-out both;
 }
 
 .animate-slide-out {
-  animation: slide-out 0.7s ease-out forwards;
+  animation: slide-out 0.8s ease-out forwards;
 }
 
 .animate-slide-in-opp {
-  animation: slide-in-opp 0.7s ease-out forwards;
+  animation: slide-in-opp 0.7s ease-out both;
 }
 
 .menu-btn-1 {
@@ -218,4 +233,5 @@ background: linear-gradient(60deg, rgba(205, 208, 212, 1) 0%, rgba(161, 161, 161
           mask-composite: subtract;
   animation: l3 1s infinite linear;
 }
+
 @keyframes l3 {to{transform: rotate(1turn)}}

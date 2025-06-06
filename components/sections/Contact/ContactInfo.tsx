@@ -6,6 +6,7 @@ import { LuArrowUpRight, LuGithub, LuLinkedin, LuMail, LuMapPin } from "react-ic
 import { useRef } from "react";
 import { useInView } from "@/components/hooks/useInView";
 import Socials from "./Socials";
+import { CardBody } from "@/components/CardBody";
 
 export function ContactInfo() {
         const contentRef = useRef<HTMLDivElement | any>(null);
@@ -31,15 +32,19 @@ export function ContactInfo() {
             link: null
         },
     ]
+    const anim=` ${
+          showContent ? "animate-fade-in opacity-10 *:" : "animate-fade-out"
+        }`;
     return (
         <div ref={contentRef} className={`relative backdrop-blur-3xl group transition-opacity duration-1000 ${
           showContent ? "animate-fade-in opacity-10 *:" : "animate-fade-out"
         }`}>
-                <div className="absolute inset-0 bg-[#c4cbd0] rounded-2xl transform -rotate-1 
+                <div className="absolute inset-0 bg-[#51606c] rounded-2xl transform -rotate-1 
               transition-transform duration-300 group-hover:-rotate-2"></div>
-
-        <div className="relative bg-[#6c757d] text-white rounded-4xl w-full border-2 border-black p-4 flex flex-col h-full shadow-lg transition-transform 
+        <CardBody className="relative bg-[#6c757d] text-white rounded-4xl
+         w-full border-2 border-black p-4 flex flex-col h-full shadow-lg transition-transform 
                 duration-300 group-hover:translate-y-[-5px]">
+
             <h2 className="relative p-2 group text-2xl font-bold text-center lg:text-left w-full">
                 <span className="relative inline-block">Other Ways to Connect</span>
             </h2>
@@ -64,7 +69,8 @@ export function ContactInfo() {
                 <div className="border-t-2 border-gray-300 w-full my-0.5" />
                 <Socials/>
             </div>
-        </div>
+        </CardBody>
+
         </div>
     )
 }
