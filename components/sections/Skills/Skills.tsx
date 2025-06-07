@@ -3,12 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { Heading } from "../../Heading";
 import { SkillShape } from "./SkillShape";
 import { Button } from "@/components/Button";
-import { SkillsContainer } from "./SkillsContainer";
-import { LuCircle, LuTable } from "react-icons/lu";
+import { LuTable } from "react-icons/lu";
 import { TbWheel } from "react-icons/tb";
-import { CardBody } from "@/components/CardBody";
-import { useInView } from "@/components/hooks/useInView";
 import { SkillTabelCard } from "./SkillsTableCard";
+import { SkillWheel } from "./SkillWheel";
 
 interface SkillsProps {
   skill: string;
@@ -44,21 +42,33 @@ export function Skills() {
   const [areaWidth, setAreaWidth] = useState(0);
 
   const [category, setCategory] = useState('all');
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const [format, setFormat] = useState("wheel")
   useEffect(() => {
     const updateWidth = () => {
       setAreaWidth(window.innerWidth - 500);
-      if(areaWidth < 400){
-        setFormat('table')
-      }
+      
     };
 
     updateWidth();
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
+ useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 900px)");
 
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      setIsSmallScreen(e.matches);
+      if (e.matches) setFormat("table");
+    };
+
+    setIsSmallScreen(mediaQuery.matches);
+    if (mediaQuery.matches) setFormat("table");
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
   const placed: { top: number; left: number }[] = [];
 
 
@@ -119,7 +129,7 @@ export function Skills() {
     <div className="p-2 pb-8 lg:px-24">
       <div className="px-2 lg:p-16 space-y-4">
         <Heading text="Skills" size="4xl" className="pb-8" />
-        {areaWidth > 400 && <div className="flex w-full justify-center mb-14 items-center text-2xl text-white relative">
+        {!isSmallScreen && <div className="flex w-full justify-center mb-14 items-center text-2xl text-white relative">
           <div
             onMouseEnter={() => setIsHovering('wheel')}
             onMouseLeave={() => setIsHovering('')}
@@ -173,24 +183,8 @@ export function Skills() {
       </div>
       {format === 'wheel' ? <div className="flex justify-center w-full">
         {areaWidth > 0 && (
-          <div
-            className="relative"
-            style={{ height: `${dynamicHeight}px`, width: `${areaWidth}px` }}
-          >
-            <div
-              className="absolute flex items-center justify-center text-white text-2xl font-bold rounded-md border border-white/40 bg-white/5 backdrop-blur-md shadow-md"
-              style={{
-                top: `${centerY - 60 / 2}px`,
-                left: `${centerX - 200 / 2}px`,
-                width: '200px',
-                height: '60px',
-              }}
-            >
-              {category === 'all' ? 'All Skills' : `${category.charAt(0).toUpperCase() + category.slice(1)} Skills`}
-            </div>
-
-            {skillShapes}
-          </div>
+          
+          <SkillWheel dynamicHeight={dynamicHeight} areaWidth={areaWidth} centerX={centerX} centerY={centerY} skillShapes={skillShapes} category={category}/>
         )}
       </div>
         :
