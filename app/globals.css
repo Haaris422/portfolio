@@ -133,7 +133,7 @@ background: linear-gradient(60deg, rgba(205, 208, 212, 1) 0%, rgba(161, 161, 161
 
 
 .animate-fade-in {
-    animation: fade-in 0.8s ease-out forwards;
+    animation: fade-in 0.7s ease-out both;
   }
 
 .animate-fade-in-slow {

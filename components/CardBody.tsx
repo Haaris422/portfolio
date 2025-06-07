@@ -5,7 +5,7 @@ type CardBodyProps = {
   animationClass?: string;
   delay?: number;
   className?: string;
-  cardRef?: React.RefObject<HTMLDivElement>;
+  cardRef?: React.RefObject<HTMLDivElement> | (HTMLDivElement | any);
 };
 
 export function CardBody({
@@ -21,7 +21,7 @@ export function CardBody({
       style={{ animationDelay: `${delay}s` }}
       className={`relative bg-white/10 backdrop-blur-md 
         text-white  space-y-6 rounded-lg border 
-        border-white/20 p-6 pt-12 shadow-md transition-opacity duration-500 
+        border-white/20 p-6 pt-12 shadow-md transition-all duration-500 
         ${animationClass} ${className}`}
     >
       {children}

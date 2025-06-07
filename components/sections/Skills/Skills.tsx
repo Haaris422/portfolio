@@ -1,9 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Heading } from "../../Heading";
 import { SkillShape } from "./SkillShape";
 import { Button } from "@/components/Button";
 import { SkillsContainer } from "./SkillsContainer";
+import { LuCircle, LuTable } from "react-icons/lu";
+import { TbWheel } from "react-icons/tb";
+import { CardBody } from "@/components/CardBody";
+import { useInView } from "@/components/hooks/useInView";
+import { SkillTabelCard } from "./SkillsTableCard";
 
 interface SkillsProps {
   skill: string;
@@ -34,14 +39,19 @@ export function Skills() {
 
 
   const size = 100;
-  const padding = 10;
-  const areaHeight = 600;
+  const areaHeight = 900;
 
   const [areaWidth, setAreaWidth] = useState(0);
+
   const [category, setCategory] = useState('all');
+
+  const [format, setFormat] = useState("wheel")
   useEffect(() => {
     const updateWidth = () => {
       setAreaWidth(window.innerWidth - 500);
+      if(areaWidth < 400){
+        setFormat('table')
+      }
     };
 
     updateWidth();
@@ -51,30 +61,7 @@ export function Skills() {
 
   const placed: { top: number; left: number }[] = [];
 
-  function generatePosition(): { top: number; left: number } {
-    const maxTries = 1000;
-    let tries = 0;
 
-    while (tries < maxTries) {
-      const left = Math.floor(Math.random() * (areaWidth - size));
-      const top = Math.floor(Math.random() * (areaHeight - size));
-
-      const overlaps = placed.some(pos => {
-        const dx = pos.left - left;
-        const dy = pos.top - top;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        return distance < size + padding;
-      });
-
-      if (!overlaps) {
-        return { top, left };
-      }
-
-      tries++;
-    }
-
-    return { top: Math.random() * areaHeight, left: Math.random() * areaWidth };
-  }
 
   const currentTab: SkillsProps[] = areaWidth > 0 ? skills.filter((item) => {
     if (category === 'all') {
@@ -85,10 +72,26 @@ export function Skills() {
     } else return null
   }) : skills;
 
+  const angleStep = (2 * Math.PI) / currentTab.length;
+  const safePadding = 40;
+  const arcLength = size + safePadding;
+  const minRadius = (currentTab.length * arcLength) / (2 * Math.PI);
+  const radius = Math.max(250, minRadius);
+  const centerX = areaWidth / 2;
+  const padding = 40;
+  const dynamicHeight = 2 * radius + size + padding;
+
+  const centerY = dynamicHeight / 2;
+
   const skillShapes = areaWidth > 0
     ? currentTab.map((skill, i) => {
-      const { top, left } = generatePosition();
-      placed.push({ top, left });
+      const angle = i * angleStep;
+
+      const left = centerX + radius * Math.cos(angle) - size / 2;
+      const top = centerY + radius * Math.sin(angle) - size / 2;
+
+      const rotation = (angle * 180) / Math.PI + 90;
+
       return (
         <SkillShape
           key={i}
@@ -99,41 +102,105 @@ export function Skills() {
           proficiency={skill.level}
           top={top}
           left={left}
+          rotate={rotation}
         />
       );
     })
     : null;
+
   const tabs = [
     'all',
     'frontend',
     'backend',
     'other',
   ]
-  return <SkillsContainer/>
-  // return (
-  //   <div className="p-2 pb-8 lg:px-32">
-  //     <div className="px-2 lg:p-16 space-y-4">
-  //       <Heading text="Skills" size="4xl" className="pb-8" />
-  //       <div className="flex gap-2 justify-between">
-  //         {tabs.map((tab) => (
-  //           <Button key={tab} onClick={() => setCategory(tab)} className={`${category === tab ? 'bg-white/10 backdrop-blur-md' : 'bg-transparent'} w-full cursor-pointer`}>
-  //             <Heading text={`${tab.charAt(0).toUpperCase() + tab.slice(1)} Skills`} size="2xl" />
+  const [isHovering, setIsHovering] = useState('wheel');
+  return (
+    <div className="p-2 pb-8 lg:px-24">
+      <div className="px-2 lg:p-16 space-y-4">
+        <Heading text="Skills" size="4xl" className="pb-8" />
+        {areaWidth > 400 && <div className="flex w-full justify-center mb-14 items-center text-2xl text-white relative">
+          <div
+            onMouseEnter={() => setIsHovering('wheel')}
+            onMouseLeave={() => setIsHovering('')}
+            className="relative"
+          >
+            <Button
+              onClick={() => setFormat('wheel')}
+              className={`${format === 'wheel' ? 'bg-white/40 ' : 'bg-white/10 '} transition-all 
+              duration-300 ease-in-out group cursor-pointer group 
+              hover:bg-white/40 rounded-r-none border border-white/20 border-r-black backdrop-blur-md p2`}
+            >
+              <TbWheel className=" group-hover:scale-110" />
+            </Button>
+            {isHovering === 'wheel' && (
+              <div className="absolute  animate-slide-in top-full mt-1 -left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded border border-white/20 shadow-lg z-50">
+                Wheel View
+              </div>
+            )}
+          </div>
 
-  //           </Button>
-  //         ))}
+          <div
+            onMouseEnter={() => setIsHovering('table')}
+            onMouseLeave={() => setIsHovering('')}
+            className="relative"
+          >
+            <Button
+              onClick={() => setFormat('table')}
+              className={`${format === 'table' ? 'bg-white/40 ' : 'bg-white/10 '} rounded-l-none border 
+              hover:bg-white/40 transition-all duration-300 ease-in-out group cursor-pointer 
+              group border-white/20 border-l-black backdrop-blur-md p2`}
+            >
+              <LuTable className=" group-hover:scale-110" />
+            </Button>
+            {isHovering === 'table' && (
+              <div className="absolute w-[80px] animate-slide-in-opp top-full mt-1 left-full -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded border border-white/20 shadow-lg z-50">
+                Table View
+              </div>
+            )}
+          </div>
+        </div>}
 
-  //       </div>
-  //     </div>
-  //     <div className="flex justify-center w-full">
-  //       {areaWidth > 0 && (
-  //         <div
-  //           className="relative"
-  //           style={{ height: `${areaHeight}px`, width: `${areaWidth}px` }}
-  //         >
-  //           {skillShapes}
-  //         </div>
-  //       )}
-  //     </div>
-  //   </div>
-  // );
+        <div className="flex gap-2 justify-between">
+          {tabs.map((tab) => (
+            <Button key={tab} onClick={() => setCategory(tab)} className={`max-w-md ${category === tab ? 'bg-white/10 backdrop-blur-md' : 'bg-transparent'} w-full cursor-pointer`}>
+              <Heading text={`${tab.charAt(0).toUpperCase() + tab.slice(1)} Skills`} className="text-md sm:text-2xl" size={''} />
+
+            </Button>
+          ))}
+
+        </div>
+      </div>
+      {format === 'wheel' ? <div className="flex justify-center w-full">
+        {areaWidth > 0 && (
+          <div
+            className="relative"
+            style={{ height: `${dynamicHeight}px`, width: `${areaWidth}px` }}
+          >
+            <div
+              className="absolute flex items-center justify-center text-white text-2xl font-bold rounded-md border border-white/40 bg-white/5 backdrop-blur-md shadow-md"
+              style={{
+                top: `${centerY - 60 / 2}px`,
+                left: `${centerX - 200 / 2}px`,
+                width: '200px',
+                height: '60px',
+              }}
+            >
+              {category === 'all' ? 'All Skills' : `${category.charAt(0).toUpperCase() + category.slice(1)} Skills`}
+            </div>
+
+            {skillShapes}
+          </div>
+        )}
+      </div>
+        :
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
+          {currentTab.map((skill, index) => {
+            return (
+              <SkillTabelCard key={index} index={index} skill={skill}/>
+            )
+          })}
+        </div>}
+    </div>
+  );
 }
