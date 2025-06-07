@@ -73,14 +73,14 @@ export function Skills() {
 
 
 
-  const currentTab: SkillsProps[] = areaWidth > 0 ? skills.filter((item) => {
+  const currentTab: SkillsProps[] = skills.filter((item) => {
     if (category === 'all') {
       return item;
     } else if (item.category === category) {
       console.log("Skills: line 82: currentTab: if not 'all':", item.skill, category)
       return item;
     } else return null
-  }) : skills;
+  });
 
   const angleStep = (2 * Math.PI) / currentTab.length;
   const safePadding = 40;
@@ -126,9 +126,9 @@ export function Skills() {
   ]
   const [isHovering, setIsHovering] = useState('wheel');
   return (
-    <div className="p-2 pb-8 lg:px-24">
-      <div className="px-2 lg:p-16 space-y-4">
-        <Heading text="Skills" size="4xl" className="pb-8" />
+    <div >
+      <div className="space-y-12 pb-8">
+        <Heading text="Skills" size="4xl"/>
         {!isSmallScreen && <div className="flex w-full justify-center mb-14 items-center text-2xl text-white relative">
           <div
             onMouseEnter={() => setIsHovering('wheel')}
@@ -171,10 +171,13 @@ export function Skills() {
           </div>
         </div>}
 
-        <div className="flex gap-2 justify-between">
+        <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
           {tabs.map((tab) => (
-            <Button key={tab} onClick={() => setCategory(tab)} className={`max-w-md ${category === tab ? 'bg-white/10 backdrop-blur-md' : 'bg-transparent'} w-full cursor-pointer`}>
-              <Heading text={`${tab.charAt(0).toUpperCase() + tab.slice(1)} Skills`} className="text-md sm:text-2xl" size={''} />
+            <Button key={tab} 
+            onClick={() => setCategory(tab)} 
+            className={`max-w-md ${category === tab ? 'bg-white/10 backdrop-blur-md' : 'bg-transparent'} w-full cursor-pointer`}>
+              
+              <Heading text={`${tab.charAt(0).toUpperCase() + tab.slice(1)} Skills`} className="text-md md:text-lg lg:text-xl" size={''} />
 
             </Button>
           ))}
@@ -188,7 +191,7 @@ export function Skills() {
         )}
       </div>
         :
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 pt-8">
           {currentTab.map((skill, index) => {
             return (
               <SkillTabelCard key={index} index={index} skill={skill}/>

@@ -48,7 +48,7 @@ export function HighLights({ visible }: HighlightsProps) {
             cardRef={ref}
             delay={index * 0.2}
             animationClass={anim}
-            className="w-[300px] hover:scale-105 hover:backdrop-blur-3xl group"
+            className="w-[300px] hover:scale-105 group"
           >
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 perspective-[1000px]">
               <div className="bg-black text-white text-4xl rounded-full p-3 shadow-md transition-transform duration-700 group-hover:[transform:rotateY(360deg)] [transform-style:preserve-3d] will-change-transform">

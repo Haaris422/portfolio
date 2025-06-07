@@ -46,23 +46,21 @@ export function Experience() {
   ];
 
   return (
-    <div className="p-2 lg:px-32 lg:py-2">
 
-      <div className="px-2 py-8 lg:p-16 space-y-4">
+      <div className="space-y-12">
 
-        <Heading text="Work Experience" className="pb-8" size="4xl"/>
+        <Heading text="Work Experience" size="4xl"/>
         <div className="space-y-8">
           {experience.map((exp, index) => (
             <Card key={index} data={exp} />
           ))}
         </div>
-        <Heading text={"Major Projects"} size="2xl" className="my-10"/>
+        <Heading text={"Major Projects"} size="2xl" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {projects.map((proj, index) => (
             <Card key={index} data={proj} />
           ))}
         </div>
       </div>
-    </div>
   )
 }

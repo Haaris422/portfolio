@@ -49,11 +49,11 @@ export function ContactInfo() {
                 <span className="relative inline-block">Other Ways to Connect</span>
             </h2>
 
-            <div className="p-4 space-y-8">
+            <div className="p-2 sm:p-4 space-y-8">
                 {otherContacts.map((location, index) => (
                     <div className="flex items-center gap-8" key={index}>
-                        <div className="bg-black text-white text-2xl p-3 rounded-lg">{location.icon}</div>
-                        <div className="inline-block text-lg xs:text-lg">
+                        <div className="bg-black text-white text-lg sm:text-2xl p-3 rounded-lg">{location.icon}</div>
+                        <div className="inline-block text-md sm:text-lg">
                             <div className="font-bold">{location.label}</div>
                             {location.link ? (
                                 <Link target="_blank" href={location.link}>{location.value}</Link>
