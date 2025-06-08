@@ -5,7 +5,7 @@ type CardBodyProps = {
   animationClass?: string;
   delay?: number;
   className?: string;
-  cardRef?: React.RefObject<HTMLDivElement> | (HTMLDivElement | any);
+cardRef?: React.Ref<HTMLDivElement>;
 };
 
 export function CardBody({

@@ -1,6 +1,6 @@
-import { Heading } from "@/components/Heading";
-import { ContactForm } from "./ContactForm";
-import { ContactInfo } from "./ContactInfo";
+import { Heading } from "@/components/shared/Heading";
+import { ContactForm } from "./Components/ContactForm";
+import { ContactInfo } from "./Components/ContactInfo";
 
 export function Contact() {
     return (

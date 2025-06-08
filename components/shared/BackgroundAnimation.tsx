@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
+type ShapeType = 'triangle' | 'square' | 'circle';
 
 const BackgroundAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -51,7 +52,7 @@ const BackgroundAnimation: React.FC = () => {
         this.color = `rgba(255, 255, 255, ${Math.random() * 0.15 + 0.05})`;
         this.speed = Math.random() * 0.2 + 0.05;
         this.opacity = Math.random() * 0.5 + 0.1;
-        this.type = ['triangle', 'square', 'circle'][Math.floor(Math.random() * 3)] as any;
+        this.type = ['triangle', 'square', 'circle'][Math.floor(Math.random() * 3)] as ShapeType;
         this.rotation = Math.random() * Math.PI * 2;
         this.rotationSpeed = (Math.random() - 0.5) * 0.01;
       }

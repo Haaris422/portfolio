@@ -1,11 +1,5 @@
-interface SkillWheelProps {
-    dynamicHeight:number;
-    areaWidth:number;
-    centerX:number;
-    centerY:number;
-    category:string;
-    skillShapes: any
-}
+import { SkillWheelProps } from "../Data";
+
 export function SkillWheel({dynamicHeight, areaWidth, centerX, centerY, category, skillShapes}: SkillWheelProps){
     return(
         <div

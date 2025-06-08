@@ -4,13 +4,14 @@ interface HeadingProps{
     className?:string
 }
 
-const sizeMap:any = {
-    'xl': 'text-xl',
+const sizeMap: { [key: string]: string } = {
+  xl: 'text-xl',
   '2xl': 'text-2xl',
   '3xl': 'text-3xl',
   '4xl': 'text-4xl',
   '5xl': 'text-5xl',
 };
+
 
 export function Heading({ text, size, className = '' }: HeadingProps) {
   const textSize = sizeMap[size] || 'text-base';

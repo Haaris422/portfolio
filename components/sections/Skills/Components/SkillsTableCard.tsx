@@ -1,27 +1,19 @@
-import { CardBody } from "@/components/CardBody";
+import { CardBody } from "@/components/shared/CardBody";
 import { useInView } from "@/components/hooks/useInView";
 import { useRef } from "react";
-interface SkillsProps {
-    skill: string;
-    level: number;
-    icon: string;
-    category: 'frontend' | 'backend' | 'other';
-}
-interface SkillCard {
-    skill: SkillsProps;
-    index:number
-}
+import { SkillCard } from "../Data";
+
 export function SkillTabelCard({ skill, index }: SkillCard) {
-    const cardRef = useRef<HTMLDivElement | any>(null);
+    const cardRef = useRef<HTMLDivElement>(null);
     const inView = useInView(cardRef);
     const animClass = 'animate-fade-in'
     return (
         <CardBody delay={index * 0.1} cardRef={cardRef} animationClass={animClass} className="text-white p-4! cursor-pointer hover:scale-105">
-            
+
             <div className="flex justify-between items-center w-full">
                 <span>
                     <h2 className="text-xl font-bold">
-                    {skill.skill}
+                        {skill.skill}
                     </h2>
                     <span className="italic text-sm">
                         {skill.category.charAt(0).toUpperCase() + skill.category.slice(1)}
@@ -41,6 +33,17 @@ export function SkillTabelCard({ skill, index }: SkillCard) {
                 Profeciency:
                 <span>
                     {skill.level}%
+                </span>
+            </div>
+            <div className="flex justify-between items-center">
+                Level:
+                <span className={`text-xs font-semibold px-2 py-1 rounded-full ${skill.level >= 80
+                        ? 'bg-green-500/20 text-green-400'
+                        : skill.level >= 60
+                            ? 'bg-yellow-500/20 text-yellow-400'
+                            : 'bg-red-500/20 text-red-400'
+                    }`}>
+                    {skill.level >= 80 ? 'Expert' : skill.level >= 60 ? 'Intermediate' : 'Beginner'}
                 </span>
             </div>
         </CardBody>

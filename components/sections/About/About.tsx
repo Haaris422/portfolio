@@ -1,23 +1,21 @@
 "use client"
-import { Button } from "../../Button";
+import { Button } from "../../shared/Button";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "../../hooks/useInView";
-import { Heading } from "../../Heading";
-import { HighLights } from "./HighLights";
-import { MdKeyboardDoubleArrowDown, MdKeyboardDoubleArrowUp } from "react-icons/md";
-import { Download } from "./Download";
+import { Heading } from "../../shared/Heading";
+import { HighLights } from "./Components/HighLights";
+import { MdKeyboardDoubleArrowDown } from "react-icons/md";
+import { Download } from "./Components/Download";
 export function About() {
-  const skills = ["React.js", "Next.js", "TypeScript", "Tailwind", "JavaScript", "HTML", "CSS", "Redux"]
-  const contentRef = useRef<HTMLDivElement | any>(null);
-  const [isClient, setIsClient] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+    const showContent = useInView(contentRef);
+
   const [clicked, setClicked] = useState(true);
 
   useEffect(() => {
-    setIsClient(true);
     const isSmallScreen = window.matchMedia("(max-width: 640px)").matches;
     setClicked(!isSmallScreen);
   }, []);
-  const showContent = useInView(contentRef);
 
 
   return (

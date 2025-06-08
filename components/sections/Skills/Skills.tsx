@@ -1,61 +1,33 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { Heading } from "../../Heading";
-import { SkillShape } from "./SkillShape";
-import { Button } from "@/components/Button";
-import { LuTable } from "react-icons/lu";
-import { TbWheel } from "react-icons/tb";
-import { SkillTabelCard } from "./SkillsTableCard";
-import { SkillWheel } from "./SkillWheel";
+import { useEffect, useState } from "react";
+import { Heading } from "../../shared/Heading";
+import { SkillShape } from "./Components/SkillShape";
+import { Button } from "@/components/shared/Button";
+import { SkillTabelCard } from "./Components/SkillsTableCard";
+import { SkillWheel } from "./Components/SkillWheel";
+import { FormatToggle } from "./Components/FormToggle";
+import { skills, SkillsProps } from "./Data";
 
-interface SkillsProps {
-  skill: string;
-  level: number;
-  icon: string;
-  category: 'frontend' | 'backend' | 'other';
-}
+
 
 export function Skills() {
-  const skills: SkillsProps[] = [
-    { skill: "React.js", level: 90, icon: "⚛️", category: 'frontend' },
-    { skill: "Next.js", level: 85, icon: "▲", category: 'frontend' },
-    { skill: "TypeScript", level: 80, icon: "𝓣", category: 'frontend' },
-    { skill: "JavaScript", level: 90, icon: "𝓙𝓢", category: 'frontend' },
-    { skill: "HTML", level: 95, icon: "🌐", category: 'frontend' },
-    { skill: "CSS", level: 85, icon: "🎨", category: 'frontend' },
-    { skill: "Tailwind CSS", level: 90, icon: "🌊", category: 'frontend' },
-    { skill: "Redux", level: 75, icon: "🔄", category: 'frontend' },
-    { skill: "Node.js", level: 80, icon: "🟢", category: 'backend' },
-    { skill: "Socket.io", level: 70, icon: "🔌", category: 'backend' },
-    { skill: "Firestore Services", level: 75, icon: "🔥", category: 'backend' },
-    { skill: "Google Cloud Services", level: 70, icon: "ɢ", category: 'backend' },
-    { skill: "MongoDB", level: 75, icon: "🍃", category: 'backend' },
-    { skill: "PostgreSQL", level: 70, icon: "🐘", category: 'backend' },
-    { skill: "Git", level: 75, icon: "🍃", category: 'other' },
-    { skill: "Photoshop", level: 70, icon: "🐘", category: 'other' },
-  ];
-
-
   const size = 100;
-  const areaHeight = 900;
-
   const [areaWidth, setAreaWidth] = useState(0);
-
   const [category, setCategory] = useState('all');
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [format, setFormat] = useState("wheel");
 
-  const [format, setFormat] = useState("wheel")
   useEffect(() => {
     const updateWidth = () => {
       setAreaWidth(window.innerWidth - 500);
-      
-    };
 
+    };
     updateWidth();
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
- useEffect(() => {
+
+  useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 900px)");
 
     const handleMediaChange = (e: MediaQueryListEvent) => {
@@ -69,9 +41,6 @@ export function Skills() {
     mediaQuery.addEventListener("change", handleMediaChange);
     return () => mediaQuery.removeEventListener("change", handleMediaChange);
   }, []);
-  const placed: { top: number; left: number }[] = [];
-
-
 
   const currentTab: SkillsProps[] = skills.filter((item) => {
     if (category === 'all') {
@@ -124,59 +93,27 @@ export function Skills() {
     'backend',
     'other',
   ]
-  const [isHovering, setIsHovering] = useState('wheel');
+  const [isHovering, setIsHovering] = useState('');
   return (
     <div >
       <div className="space-y-12 pb-8">
-        <Heading text="Skills" size="4xl"/>
-        {!isSmallScreen && <div className="flex w-full justify-center mb-14 items-center text-2xl text-white relative">
-          <div
-            onMouseEnter={() => setIsHovering('wheel')}
-            onMouseLeave={() => setIsHovering('')}
-            className="relative"
-          >
-            <Button
-              onClick={() => setFormat('wheel')}
-              className={`${format === 'wheel' ? 'bg-white/40 ' : 'bg-white/10 '} transition-all 
-              duration-300 ease-in-out group cursor-pointer group 
-              hover:bg-white/40 rounded-r-none border border-white/20 border-r-black backdrop-blur-md p2`}
-            >
-              <TbWheel className=" group-hover:scale-110" />
-            </Button>
-            {isHovering === 'wheel' && (
-              <div className="absolute  animate-slide-in top-full mt-1 -left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded border border-white/20 shadow-lg z-50">
-                Wheel View
-              </div>
-            )}
-          </div>
+        <Heading text="Skills" size="4xl" />
+        {!isSmallScreen && (
+          <FormatToggle
+            format={format}
+            setFormat={setFormat}
+            isHovering={isHovering}
+            setIsHovering={setIsHovering}
+          />
+        )}
 
-          <div
-            onMouseEnter={() => setIsHovering('table')}
-            onMouseLeave={() => setIsHovering('')}
-            className="relative"
-          >
-            <Button
-              onClick={() => setFormat('table')}
-              className={`${format === 'table' ? 'bg-white/40 ' : 'bg-white/10 '} rounded-l-none border 
-              hover:bg-white/40 transition-all duration-300 ease-in-out group cursor-pointer 
-              group border-white/20 border-l-black backdrop-blur-md p2`}
-            >
-              <LuTable className=" group-hover:scale-110" />
-            </Button>
-            {isHovering === 'table' && (
-              <div className="absolute w-[80px] animate-slide-in-opp top-full mt-1 left-full -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded border border-white/20 shadow-lg z-50">
-                Table View
-              </div>
-            )}
-          </div>
-        </div>}
 
         <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
           {tabs.map((tab) => (
-            <Button key={tab} 
-            onClick={() => setCategory(tab)} 
-            className={`max-w-md ${category === tab ? 'bg-white/10 backdrop-blur-md' : 'bg-transparent'} w-full cursor-pointer`}>
-              
+            <Button key={tab}
+              onClick={() => setCategory(tab)}
+              className={`max-w-md ${category === tab ? 'bg-white/10 backdrop-blur-md' : 'bg-transparent'} w-full cursor-pointer`}>
+
               <Heading text={`${tab.charAt(0).toUpperCase() + tab.slice(1)} Skills`} className="text-md md:text-lg lg:text-xl" size={''} />
 
             </Button>
@@ -186,15 +123,15 @@ export function Skills() {
       </div>
       {format === 'wheel' ? <div className="flex justify-center w-full">
         {areaWidth > 0 && (
-          
-          <SkillWheel dynamicHeight={dynamicHeight} areaWidth={areaWidth} centerX={centerX} centerY={centerY} skillShapes={skillShapes} category={category}/>
+
+          <SkillWheel dynamicHeight={dynamicHeight} areaWidth={areaWidth} centerX={centerX} centerY={centerY} skillShapes={skillShapes} category={category} />
         )}
       </div>
         :
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 pt-8">
           {currentTab.map((skill, index) => {
             return (
-              <SkillTabelCard key={index} index={index} skill={skill}/>
+              <SkillTabelCard key={index} index={index} skill={skill} />
             )
           })}
         </div>}

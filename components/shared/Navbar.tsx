@@ -1,19 +1,19 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import HamburgerButton from "./Hamburger";
-import ThemeToggleButton from "./ThemeToggle";
 import Link from "next/link";
-
-export function Navbar() {
-  const menuItems = [
+ const menuItems = [
     { label: "About", href: "#about" },
     { label: "Work Experience", href: "#experience" },
     { label: "Skills", href: "#skills" },
     { label: "Contact Me", href: "#contact" },
   ];
+export function Navbar() {
+ 
 
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [openMenu, setOpenMenu] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
 
   const menuRef = useRef<HTMLUListElement>(null);
   const hamburgerRef = useRef<HTMLDivElement>(null);
@@ -40,6 +40,19 @@ export function Navbar() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [openMenu]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroHeight = window.innerHeight;
+      const scrollPosition = window.scrollY;
+      
+      setIsSticky(scrollPosition >= heroHeight - 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   useEffect(() => {
     const sectionElements = menuItems
       .map((item) => document.querySelector(item.href))
@@ -65,8 +78,7 @@ export function Navbar() {
     }
 
     window.addEventListener("scroll", getCurrentSection);
-    getCurrentSection(); // Run on mount
-
+    getCurrentSection(); 
     return () => {
       window.removeEventListener("scroll", getCurrentSection);
     };
@@ -78,7 +90,6 @@ export function Navbar() {
       rootMargin: "-40% 0px -40% 0px",
       threshold: 0.1,
     };
-
 
     let timeout: NodeJS.Timeout;
     const observer = new IntersectionObserver((entries) => {
@@ -92,7 +103,6 @@ export function Navbar() {
       });
     }, observerOptions);
 
-
     menuItems.forEach((item) => {
       const section = document.querySelector(item.href);
       if (section) observer.observe(section);
@@ -102,26 +112,34 @@ export function Navbar() {
   }, []);
 
   return (
-    <div className="fixed w-full z-10 outlined-text backdrop-blur-md">
-      <div className="flex items-center justify-between py-2 px-4">
-        <div>
-          <p className="text-xl animate-slide-down">Mohd. Haaris Amin</p>
-          <p className="text-md animate-slide-in">Front-End Developer</p>
+    <div 
+      className={`w-full z-50 outlined-text transition-all duration-300 ${
+        isSticky 
+          ? 'fixed top-0 backdrop-blur-md bg-black/20 shadow-lg' 
+          : 'relative backdrop-blur-md bg-black/20 shadow-lg '
+      }`}
+    >
+      <div className={` flex items-center justify-between py-2 px-4`}>
+        <div className={`transition-all duration-100 ease-in-out ${isSticky ? 'animate-slide-down':'opacity-0'}`}>
+          <p className="text-xl ">Mohd. Haaris Amin</p>
+          <p className="text-md ">Front-End Developer</p>
         </div>
 
         <ul className="hidden text-xl md:flex space-x-8">
           {menuItems.filter((item) => item.href !== "#contact").map((item) => (
             <li
               key={item.label}
-              className={`relative group animate-slide-down ${activeSection === item.href ? " font-semibold" : ""
-                }`}
+              className={`relative group animate-slide-down ${
+                activeSection === item.href ? " font-semibold" : ""
+              }`}
             >
               <Link href={item.href}>{item.label}</Link>
               <span
-                className={`absolute mt-0.5 left-1/2 bottom-0 h-[2.5px] transition-all duration-300 ease-in-out transform -translate-x-1/2 ${activeSection === item.href
-                  ? "w-full bg-white"
-                  : "w-0 group-hover:w-full group-hover:left-0 group-hover:translate-x-0 bg-[#d9d9d9]"
-                  }`}
+                className={`absolute mt-0.5 left-1/2 bottom-0 h-[2.5px] transition-all duration-300 ease-in-out transform -translate-x-1/2 ${
+                  activeSection === item.href
+                    ? "w-full bg-white"
+                    : "w-0 group-hover:w-full group-hover:left-0 group-hover:translate-x-0 bg-[#d9d9d9]"
+                }`}
               />
             </li>
           ))}
@@ -129,15 +147,17 @@ export function Navbar() {
 
         <div className="animate-slide-in-opp text-xl">
           <div
-            className={`relative hidden md:block group animate-slide-down ${activeSection === "#contact" ? "text-white font-semibold" : ""
-              }`}
+            className={`relative hidden md:block group animate-slide-down ${
+              activeSection === "#contact" ? "text-white font-semibold" : ""
+            }`}
           >
             <Link href="#contact">Contact Me</Link>
             <span
-              className={`absolute mt-0.5 left-1/2 bottom-0 h-[2.5px] transition-all duration-300 ease-in-out transform -translate-x-1/2 ${activeSection === "#contact"
-                ? "w-full bg-white"
-                : "w-0 group-hover:w-full group-hover:left-0 group-hover:translate-x-0 bg-[#d9d9d9]"
-                }`}
+              className={`absolute mt-0.5 left-1/2 bottom-0 h-[2.5px] transition-all duration-300 ease-in-out transform -translate-x-1/2 ${
+                activeSection === "#contact"
+                  ? "w-full bg-white"
+                  : "w-0 group-hover:w-full group-hover:left-0 group-hover:translate-x-0 bg-[#d9d9d9]"
+              }`}
             />
           </div>
           <div ref={hamburgerRef} className="block md:hidden">
@@ -148,21 +168,24 @@ export function Navbar() {
 
       <ul
         ref={menuRef}
-        className={`tab flex md:hidden gap-8 py-2 text-lg text-[#d9d9d9] flex-col opacity-60 font-bold justify-center items-center transition-all duration-500 ease-in-out overflow-hidden ${openMenu ? "max-h-screen" : "max-h-0 py-0"
-          }`}
+        className={`tab flex md:hidden gap-8 py-2 text-lg text-[#d9d9d9] flex-col opacity-60 font-bold justify-center items-center transition-all duration-500 ease-in-out overflow-hidden ${
+          openMenu ? "max-h-screen" : "max-h-0 py-0"
+        }`}
       >
         {menuItems.map((item) => (
           <li
             key={item.label}
-            className={`relative group animate-slide-down ${activeSection === item.href ? "text-white font-semibold" : ""
-              }`}
+            className={`relative group animate-slide-down ${
+              activeSection === item.href ? "text-white font-semibold" : ""
+            }`}
           >
             <Link href={item.href}>{item.label}</Link>
             <span
-              className={`absolute mt-0.5 left-1/2 bottom-0 h-[2.5px] transition-all duration-300 ease-in-out transform -translate-x-1/2 ${activeSection === item.href
-                ? "w-full bg-white"
-                : "w-0 group-hover:w-full group-hover:left-0 group-hover:translate-x-0 bg-[#d9d9d9]"
-                }`}
+              className={`absolute mt-0.5 left-1/2 bottom-0 h-[2.5px] transition-all duration-300 ease-in-out transform -translate-x-1/2 ${
+                activeSection === item.href
+                  ? "w-full bg-white"
+                  : "w-0 group-hover:w-full group-hover:left-0 group-hover:translate-x-0 bg-[#d9d9d9]"
+              }`}
             />
           </li>
         ))}

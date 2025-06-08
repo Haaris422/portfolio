@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 
-export function useInView(ref: React.RefObject<HTMLElement> | null, threshold = 0.1) {
+export function useInView(ref: React.RefObject<HTMLElement | null>, threshold = 0.1) {
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
-    if (!ref?.current) return;
+    const target = ref?.current;
+    if (!target) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -13,13 +14,12 @@ export function useInView(ref: React.RefObject<HTMLElement> | null, threshold = 
       { threshold }
     );
 
-    observer.observe(ref.current);
+    observer.observe(target);
 
     return () => {
-      if (ref.current) observer.unobserve(ref.current);
+      observer.unobserve(target); // Clean up using the captured target
     };
-  }, [ref?.current, threshold]);
+  }, [ref, threshold]);
 
   return isInView;
 }
-
