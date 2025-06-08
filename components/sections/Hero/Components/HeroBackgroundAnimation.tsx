@@ -90,11 +90,9 @@ const HeroBackgroundAnimation: React.FC = () => {
           this.x -= Math.cos(angle) * attract;
           this.y -= Math.sin(angle) * attract;
           
-          // Increase size and opacity when near mouse
           this.size = this.baseSize * (1 + force * 1.2);
           this.opacity = Math.min(1, this.baseOpacity + force * 0.5);
         } else {
-          // Return to normal size and opacity
           this.size = this.baseSize;
           this.opacity = this.baseOpacity;
         }
@@ -140,7 +138,6 @@ const HeroBackgroundAnimation: React.FC = () => {
     }
 
     const particles: Particle[] = [];
-    // Increased particle count significantly
     const totalParticles = Math.min(Math.floor(window.innerWidth / 12), 80);
 
     for (let i = 0; i < totalParticles; i++) {
@@ -155,7 +152,6 @@ const HeroBackgroundAnimation: React.FC = () => {
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Draw connections between particles
       particles.forEach((particle, i) => {
         particles.slice(i + 1).forEach((otherParticle) => {
           const dx = particle.x - otherParticle.x;
@@ -168,7 +164,6 @@ const HeroBackgroundAnimation: React.FC = () => {
             
             let opacity = 0.15 * (1 - dist / 100);
             
-            // Enhance connection lines near mouse
             if (mouseDistanceP1 < 120 || mouseDistanceP2 < 120) {
               opacity *= 3;
             }
@@ -183,7 +178,6 @@ const HeroBackgroundAnimation: React.FC = () => {
         });
       });
 
-      // Draw connections from mouse to nearby particles
       if (mouse.current.x > -500 && mouse.current.y > -500) {
         particles.forEach((particle) => {
           const dx = particle.x - mouse.current.x;
@@ -193,7 +187,6 @@ const HeroBackgroundAnimation: React.FC = () => {
           if (dist < 100) {
             const opacity = 0.4 * (1 - dist / 100);
             
-            // Create a glowing effect for mouse connections
             ctx.strokeStyle = `rgba(200, 200, 220, ${opacity})`;
             ctx.lineWidth = 2;
             ctx.shadowColor = 'rgba(200, 200, 220, 0.5)';
@@ -204,12 +197,10 @@ const HeroBackgroundAnimation: React.FC = () => {
             ctx.lineTo(particle.x, particle.y);
             ctx.stroke();
             
-            // Reset shadow
             ctx.shadowBlur = 0;
           }
         });
 
-        // Draw a subtle glow around the mouse cursor
         const nearbyParticles = particles.filter(p => {
           const dx = p.x - mouse.current.x;
           const dy = p.y - mouse.current.y;
