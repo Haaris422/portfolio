@@ -6,18 +6,12 @@ export function PopUp({ open, status, message, position }: PopUpProps) {
     const [visible, setVisible] = useState(open);
     const [animatingOut, setAnimatingOut] = useState(false);
 
-    
-
-    const [showBar, setShowBar] = useState(false);
-
     useEffect(() => {
         if (open) {
             setVisible(true);
             setAnimatingOut(false);
-            setShowBar(true); // start progress bar
         } else {
             setAnimatingOut(true);
-            setShowBar(false); // hide progress bar when closing
             const timeout = setTimeout(() => {
                 setVisible(false);
                 setAnimatingOut(false);
