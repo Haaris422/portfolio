@@ -125,7 +125,7 @@ export function Navbar() {
           <p className="text-md ">Front-End Developer</p>
         </div>
 
-        <ul className="hidden text-xl md:flex space-x-8">
+        <ul className="hidden text-xl lg:flex space-x-8">
           {menuItems.filter((item) => item.href !== "#contact").map((item) => (
             <li
               key={item.label}
@@ -147,7 +147,7 @@ export function Navbar() {
 
         <div className="animate-slide-in-opp text-xl">
           <div
-            className={`relative hidden md:block group animate-slide-down ${
+            className={`relative hidden lg:block group animate-slide-down ${
               activeSection === "#contact" ? "text-white font-semibold" : ""
             }`}
           >
@@ -160,7 +160,7 @@ export function Navbar() {
               }`}
             />
           </div>
-          <div ref={hamburgerRef} className="block md:hidden">
+          <div ref={hamburgerRef} className="block lg:hidden">
             <HamburgerButton open={openMenu} onClick={openMobileNav} />
           </div>
         </div>
@@ -168,26 +168,18 @@ export function Navbar() {
 
       <ul
         ref={menuRef}
-        className={`tab flex md:hidden gap-8 py-2 text-lg text-[#d9d9d9] flex-col opacity-60 font-bold justify-center items-center transition-all duration-500 ease-in-out overflow-hidden ${
-          openMenu ? "max-h-screen" : "max-h-0 py-0"
+        className={`tab flex lg:hidden py-2 text-lg text-[#d9d9d9]  flex-col  font-bold justify-center items-center transition-all duration-500 ease-in-out overflow-hidden ${
+          openMenu ? "max-h-screen opacity-60" : "max-h-0 py-0 opacity-0"
         }`}
       >
         {menuItems.map((item) => (
-          <li
-            key={item.label}
-            className={`relative group animate-slide-down ${
-              activeSection === item.href ? "text-white font-semibold" : ""
-            }`}
-          >
-            <Link href={item.href}>{item.label}</Link>
-            <span
-              className={`absolute mt-0.5 left-1/2 bottom-0 h-[2.5px] transition-all duration-300 ease-in-out transform -translate-x-1/2 ${
-                activeSection === item.href
-                  ? "w-full bg-white"
-                  : "w-0 group-hover:w-full group-hover:left-0 group-hover:translate-x-0 bg-[#d9d9d9]"
-              }`}
-            />
-          </li>
+          <Link key={item.label} className={`w-full py-4 relative text-center group animate-slide-down ${
+              activeSection === item.href ? "text-white animate-pulse font-semibold bg-white/10" : ""
+            }`} href={item.href}>
+          
+            {item.label}
+            
+          </Link>
         ))}
       </ul>
     </div>

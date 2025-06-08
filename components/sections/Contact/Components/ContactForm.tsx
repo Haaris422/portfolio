@@ -6,7 +6,7 @@ import { PopUp } from "./PopUp";
 import { useRef } from "react";
 import { useInView } from "@/components/hooks/useInView";
 import { CardBody } from "@/components/shared/CardBody";
-import { fields,ErrorProps } from "../Data";
+import { fields, ErrorProps } from "../Data";
 
 
 
@@ -14,7 +14,7 @@ export function ContactForm() {
     const contentRef = useRef<HTMLDivElement>(null);
     const showContent = useInView(contentRef);
 
-    
+
 
     const [data, setData] = useState({
         name: '', email: '', mssg: ''
@@ -28,7 +28,7 @@ export function ContactForm() {
     const [popUpProps, setPopUpProps] = useState({
         open: false, message: "", status: false
     });
-    
+
     function validate() {
         const newErrors = {
             name: "",
@@ -117,15 +117,14 @@ export function ContactForm() {
     }
 
     return (
-        <div ref={contentRef} className={`relative group transition-opacity duration-1000 ${
-          showContent ? "animate-fade-in opacity-100" : "animate-fade-out"
-        }`}>
+        <div ref={contentRef} className={`group transition-opacity duration-1000 ${showContent ? "animate-fade-in opacity-100" : "animate-fade-out"
+            }`}>
             <div className="absolute inset-0 bg-[#51606c] rounded-2xl transform rotate-1 
               transition-transform duration-300 group-hover:rotate-2"></div>
-              <CardBody className="bg-[#6c757d] text-white relative rounded-4xl w-full 
+            <CardBody className="bg-[#6c757d] text-white rounded-4xl w-full 
             border-2 border-black p-4 shadow-lg transition-transform 
                 duration-300 group-hover:translate-y-[-5px]">
-            
+
                 <h2 className="relative p-2 group text-2xl font-bold text-center lg:text-left w-full">
                     <span className="relative inline-block">
                         Send Me a Message
@@ -153,9 +152,15 @@ export function ContactForm() {
 
                     </Button>
                 </form>
-                <PopUp open={popUpProps.open} status={popUpProps.status} message={popUpProps.message} position="bottom-left" />
 
             </CardBody>
-        </div>
+  <PopUp
+    open={popUpProps.open}
+    status={popUpProps.status}
+    message={popUpProps.message}
+    position="bottom-left"
+  />
+</div>
+
     )
 }
