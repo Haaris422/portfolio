@@ -1,24 +1,25 @@
 "use client";
-import { Button } from "@/components/Button"
+import { Button } from "@/components/shared/Button"
 import { useState } from "react"
 import { LuSend } from "react-icons/lu"
 import { PopUp } from "./PopUp";
 import { useRef } from "react";
 import { useInView } from "@/components/hooks/useInView";
-import { CardBody } from "@/components/CardBody";
+import { CardBody } from "@/components/shared/CardBody";
+import { fields,ErrorProps } from "../Data";
+
+
 
 export function ContactForm() {
-    const contentRef = useRef<HTMLDivElement | any>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
     const showContent = useInView(contentRef);
 
-    const fields = [{ name: "name", type: "text", placeholder: "Your Name...", label: "Name" },
-    { name: "email", type: "email", placeholder: "Your Email...", label: "Email" },
-    { name: "mssg", type: "text", placeholder: "Your Message...", label: "Message" }
-    ];
+    
+
     const [data, setData] = useState({
         name: '', email: '', mssg: ''
     });
-    const [errors, setErrors] = useState<any>({
+    const [errors, setErrors] = useState<ErrorProps>({
         name: "",
         email: "",
         mssg: "",
@@ -29,7 +30,7 @@ export function ContactForm() {
     });
     
     function validate() {
-        let newErrors = {
+        const newErrors = {
             name: "",
             email: "",
             mssg: "",
@@ -89,7 +90,7 @@ export function ContactForm() {
             if (result.success) {
                 console.log("Success:", result);
                 setSending(false);
-                setPopUpProps((prev) => ({
+                setPopUpProps(() => ({
                     open: true,
                     status: true,
                     message: "Message Sent Successfuly"
@@ -103,7 +104,7 @@ export function ContactForm() {
                 return () => clearTimeout(timeout);
             } else {
                 setSending(false);
-                setPopUpProps((prev) => ({
+                setPopUpProps(() => ({
                     open: true,
                     status: false,
                     message: "An Error occured while sending the Message."

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { LuDownload } from 'react-icons/lu';
-import { Button } from '@/components/Button';
+import { Button } from '@/components/shared/Button';
 
 export function Download() {
   const [isHovered, setIsHovered] = useState(false);
